@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI HR Assistant</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0f0f0f;
+      color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      background-image: radial-gradient(#2c2c2c 1px, transparent 1px);
+      background-size: 20px 20px;
+      overflow: hidden;
+    }
+
+    header {
+      background-color: #121212;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #00ffc8;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid #2a2a2a;
+      font-family: 'Inter', sans-serif;
+    }
+
+    #chatbox {
+      flex: 1;
+      padding: 1.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message {
+      margin: 0.5rem 0;
+      padding: 0.75rem 1.1rem;
+      background-color: #1c1c1c;
+      border-radius: 16px;
+      max-width: 75%;
+      white-space: pre-wrap;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .user {
+      align-self: flex-end;
+      background-color: #00ffc8;
+      color: #000;
+      flex-direction: row-reverse;
+    }
+
+    .bot {
+      align-self: flex-start;
+      background-color: #1e1e1e;
+    }
+
+    .avatar {
+      font-size: 1.4rem;
+      padding-top: 2px;
+    }
+
+    form {
+      display: flex;
+      gap: 0.5rem;
+      padding: 1rem;
+      background-color: #121212;
+      border-top: 1px solid #2a2a2a;
+      align-items: center;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 0.7rem 1.25rem;
+      background-color: #00ffc8;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .toggle-label {
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    .loader {
+      border: 4px solid #2a2a2a;
+      border-top: 4px solid #00ffc8;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      margin-left: 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <header>AI HR Assistant</header>
+  <div id="chatbox"></div>
+  <form id="chatForm">
+    <input type="text" id="empInput" placeholder="Enter employee name..." required />
+    <label class="toggle-label">
+      <input type="checkbox" id="jinjaToggle" /> Use fallback
+    </label>
+    <button type="submit">Generate</button>
+    <div id="loader" class="loader" style="display:none;"></div>
+  </form>
+
+  
+
+
+  <script>
+    const form = document.getElementById('chatForm');
+    const input = document.getElementById('empInput');
+    const toggle = document.getElementById('jinjaToggle');
+    const chatbox = document.getElementById('chatbox');
+    const loader = document.getElementById('loader');
+
+    function addMessage(text, sender = 'bot') {
+      const msg = document.createElement('div');
+      msg.classList.add('message', sender);
+
+      const avatar = document.createElement('span');
+      avatar.classList.add('avatar');
+      avatar.textContent = sender === 'bot' ? '🤖' : '🙋‍♂️';
+
+      const content = document.createElement('span');
+      content.textContent = text;
+
+      msg.appendChild(avatar);
+      msg.appendChild(content);
+
+      chatbox.appendChild(msg);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    function downloadPDF(text, employeeName) {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const lines = doc.splitTextToSize(text, 180);
+        doc.text(lines, 10, 20);
+
+        const safeName = employeeName.replace(/\s+/g, '_'); // Replace spaces with underscores
+        const filename = `${safeName}_Offer_Letter.pdf`;
+
+        doc.save(filename);
+    }
+
+
+
+    // Initial welcome message
+    window.addEventListener('DOMContentLoaded', () => {
+      addMessage("👋 Welcome to your AI HR Assistant!\nType an employee name below to generate an offer letter.", 'bot');
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = input.value.trim();
+      if (!name) return;
+
+      addMessage(name, 'user');
+      input.value = '';
+      loader.style.display = 'inline-block';
+
+      try {
+        const response = await fetch('http://localhost:8000/generate-offer-letter', {
+
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            employee_name: name,
+            use_jinja: toggle.checked
+          })
+        });
+
+        const data = await response.json();
+        loader.style.display = 'none';
+
+        if (data.offer_letter) {
+          addMessage(data.offer_letter, 'bot');
+          const downloadBtn = document.createElement('button');
+          downloadBtn.textContent = '📄 Download PDF';
+          downloadBtn.style.marginTop = '0.5rem';
+          downloadBtn.onclick = () => downloadPDF(data.offer_letter,name);
+          chatbox.appendChild(downloadBtn);
+        } else {
+          addMessage('⚠️ Could not generate letter. Try another name.', 'bot');
+        }
+      } catch (err) {
+        loader.style.display = 'none';
+        addMessage('❌ Error: ' + err.message, 'bot');
+      }
+    });
+  </script>
+</body>
+</html>
+

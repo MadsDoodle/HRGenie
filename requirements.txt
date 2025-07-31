@@ -1,0 +1,17 @@
+unstructured
+pypdf
+openai
+python-dotenv
+tqdm
+langchain
+qdrant-client
+
+datetime
+jinja2
+
+fastapi>=0.104.0
+uvicorn
+pydantic>=2.11.2
+langchain>=0.3.27
+fastapi[all]
+
