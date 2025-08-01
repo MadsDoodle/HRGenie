@@ -85,7 +85,7 @@ Automate creation of formal offer letters by combining company policies and cand
 ```
 ---
 ## Entire Workflow
-
+```mermaid
 flowchart LR
     %% Ingestion
     subgraph Ingestion_Indexing["📥 Ingestion & Indexing"]
@@ -145,8 +145,6 @@ flowchart LR
     style API_Layer fill:#ffd,stroke:#444,stroke-width:2px
     style Frontends fill:#fbf,stroke:#444,stroke-width:2px
     style Output fill:#ff9,stroke:#444,stroke-width:2px
-
-
 ```
 ---
 
