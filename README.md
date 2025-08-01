@@ -86,59 +86,66 @@ Automate creation of formal offer letters by combining company policies and cand
 ---
 ## Entire Workflow
 
-```mermaid
 flowchart LR
-    subgraph Ingestion_Indexing
-        A["Raw PDFs: HR Policies & Sample Letter"] --> B["Chunking (unstructured + custom heuristics)"]
-        B --> C["Chunks JSON (docs_chunks/)"]
-        C --> D["Embedding Generation (text-embedding-3-small)"]
-        D --> E["qdrant_ready_embeddings/"]
-        E --> F["Qdrant Upload ('policy_chunks' collection)"]
+    %% Ingestion
+    subgraph Ingestion_Indexing["📥 Ingestion & Indexing"]
+        A["📝 Raw PDFs (HR Policies & Templates)"] --> B["🔪 Chunking <br>('unstructured' + heuristics)"]
+        B --> C["📦 Chunks JSON <br>(docs_chunks/)"]
+        C --> D["🧠 Embedding Generation <br>(text-embedding-3-small)"]
+        D --> E["🧩 Embedding Vectors <br>(qdrant_ready_embeddings/)"]
+        E --> F["📤 Qdrant Upload <br>('policy_chunks' collection)"]
     end
 
-    subgraph Retrieval_Metadata
-        G["User Query: 'Generate for X'"] --> H["Retriever (retrieve_relevant_chunks)"]
-        H --> I["Top-k Chunks"]
-        J["employee_list.json"] --> K["load_employee_metadata"]
-        K --> L["Employee Metadata Dict"]
+    %% Retrieval + Metadata
+    subgraph Retrieval_Metadata["🔍 Retrieval + Metadata"]
+        G["👤 User Query: 'Generate for X'"] --> H["📚 Retriever <br>(retrieve_relevant_chunks)"]
+        H --> I["🏆 Top-k Chunks"]
+        J["🗂️ employee_list.json"] --> K["📥 load_employee_metadata"]
+        K --> L["👨‍💼 Employee Metadata Dict"]
     end
 
-    subgraph Generation_Pipeline
-        subgraph RAG
-            I --> M["generate_offer_letter.py (LLM + context)"]
+    %% Generation
+    subgraph Generation_Pipeline["🧾 Offer Letter Generation"]
+        subgraph RAG["🤖 RAG (GPT-4o)"]
+            I --> M["📝 generate_offer_letter.py <br>(LLM + Context)"]
             L --> M
-            M --> N{"Success?"}
+            M --> N{"✅ Success?"}
         end
-        subgraph Fallback
-            L --> O["generate_offer_letter_jinja.py (Jinja2 template)"]
+        subgraph Fallback["📄 Fallback (Jinja2)"]
+            L --> O["📄 generate_offer_letter_jinja.py"]
             I --> O
         end
-        N -- "Yes" --> P["Offer Letter Text"]
-        N -- "No"  --> O
+        N -- "Yes" --> P["📃 Offer Letter Text"]
+        N -- "No" --> O
         O --> P
     end
 
-    subgraph API_Layer
-        P --> Q["FastAPI Endpoint (/generate-offer-letter)"]
+    %% API Layer
+    subgraph API_Layer["🔌 API Interface"]
+        P --> Q["🌐 FastAPI Endpoint <br>/generate-offer-letter"]
     end
 
-    subgraph Frontends
-        Q --> R1["Static HTML Chatbot (index.html)"]
-        Q --> R2["Streamlit App (app.py)"]
+    %% Frontend
+    subgraph Frontends["🖥️ Frontend Interfaces"]
+        Q --> R1["💬 Static Chat UI <br>(index.html)"]
+        Q --> R2["🎛️ Streamlit App <br>(app.py)"]
     end
 
-    subgraph Output
-        P --> S["PDF Export (save_offer_letter_pdf)"]
-        S --> T["Downloadable PDF"]
-        R2 --> U["Session History"]
+    %% Output
+    subgraph Output["📤 Output"]
+        P --> S["🖨️ PDF Export <br>(save_offer_letter_pdf)"]
+        S --> T["📎 Downloadable PDF"]
+        R2 --> U["🕘 Session History"]
     end
 
-    style Ingestion_Indexing fill:#f9f,stroke:#333,stroke-width:1px
-    style Retrieval_Metadata fill:#bbf,stroke:#333,stroke-width:1px
-    style Generation_Pipeline fill:#bfb,stroke:#333,stroke-width:1px
-    style API_Layer fill:#ffb,stroke:#333,stroke-width:1px
-    style Frontends fill:#fbf,stroke:#333,stroke-width:1px
-    style Output fill:#ff9,stroke:#333,stroke-width:1px
+    %% Styling blocks for readability
+    style Ingestion_Indexing fill:#f9f,stroke:#444,stroke-width:2px
+    style Retrieval_Metadata fill:#bbf,stroke:#444,stroke-width:2px
+    style Generation_Pipeline fill:#bfb,stroke:#444,stroke-width:2px
+    style API_Layer fill:#ffd,stroke:#444,stroke-width:2px
+    style Frontends fill:#fbf,stroke:#444,stroke-width:2px
+    style Output fill:#ff9,stroke:#444,stroke-width:2px
+
 
 ```
 ---
