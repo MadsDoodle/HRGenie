@@ -8,3 +8,4 @@ fenmo/
 __pycache__/
 
 .DS_Store
+.streamlit

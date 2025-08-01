@@ -14,4 +14,6 @@ uvicorn
 pydantic>=2.11.2
 langchain>=0.3.27
 fastapi[all]
+streamlit
+reportlab
 

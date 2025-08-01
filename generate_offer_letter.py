@@ -8,10 +8,16 @@ from fallback_jinja import generate_offer_letter_jinja  # 👈 fallback
 
 # Load OpenAI key
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+#openai.api_key = os.getenv("OPENAI_API_KEY")
+
+import streamlit as st
+openai.api_key = st.secrets["OPENAI_API_KEY"]
+
 
 import os
-print("🔐 Loaded OPENAI_API_KEY:", os.getenv("OPENAI_API_KEY") is not None)
+#print("🔐 Loaded OPENAI_API_KEY:", os.getenv("OPENAI_API_KEY") is not None)
+print("🔐 Loaded OPENAI_API_KEY:", "OPENAI_API_KEY" in st.secrets)
+
 
 def generate_offer_letter(emp_name: str) -> str:
     try:
