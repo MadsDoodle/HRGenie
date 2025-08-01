@@ -1,0 +1,112 @@
+[
+  {
+    "id": "hr_leave_policy_chunk_1",
+    "text": "Version: July 2025 Applies to: All Full-Time Employees (Bands L1 to L5, across all teams)",
+    "metadata": {
+      "source": "hr_leave_policy",
+      "chunk_index": 0,
+      "section_title": "Company ABC – Leave & Work from Office (WFO) Policy",
+      "type": "text"
+    }
+  },
+  {
+    "id": "hr_leave_policy_chunk_2",
+    "text": "Company ABC believes that employee well-being is foundational to high performance. This policy is designed to provide employees with clarity on:\nLeave entitlements and types\nGuidelines for applying, tracking, and managing leaves\nExpectations on work from office (WFO) across functions\nHybrid flexibility and behavioral norms while remote\nThe policy promotes trust, autonomy, and accountability—balancing personal flexibility with operational discipline.",
+    "metadata": {
+      "source": "hr_leave_policy",
+      "chunk_index": 1,
+      "section_title": "📘 1. Purpose & Philosophy",
+      "type": "text"
+    }
+  },
+  {
+    "id": "hr_leave_policy_chunk_3",
+    "text": "12\n6\n4\n2\n15\n8\n5\n2\n18\n10\n6\n2\n20\n12\n6\n2\nUnlimited (with approval)\nLeave resets annually on January 1st. Unused leave can be carried forward (max 10 days), but not encashed unless exiting the company.",
+    "metadata": {
+      "source": "hr_leave_policy",
+      "chunk_index": 2,
+      "section_title": "🏷 2. Band-wise Leave Entitlement Matrix",
+      "type": "text"
+    }
+  },
+  {
+    "id": "hr_leave_policy_chunk_4",
+    "text": "Earned Leave (EL): Planned leave for personal travel, family time, or rest. Must be\napplied ≥3 working days in advance.\nSick Leave (SL): For illness or medical emergencies. Can be taken without prior\napproval. Medical certificate needed if >2 days.\nCasual Leave (CL): For unforeseen situations (e.g., urgent home repairs, school\nevents). Capped at 2 consecutive days.\nMaternity/Paternity Leave: As per government norms. Additional flex may be\ngranted upon request.\nSpecial Leave: Bereavement, jury duty, or civic obligations (on approval).\nLeave Without Pay (LWP): Must be approved by both reporting manager and HRBP.",
+    "metadata": {
+      "source": "hr_leave_policy",
+      "chunk_index": 3,
+      "section_title": "🧠 3. Types of Leave Explained",
+      "type": "text"
+    }
+  },
+  {
+    "id": "hr_leave_policy_chunk_5",
+    "text": "1. Log into the HRMS portal.\n2. Select leave type, date range, and reason.\n3. Confirm manager notification.\n4. Track approval status. HR will follow-up for SL documentation if applicable.\n5. Team calendar auto-updated on approval.\nEmergency leave? Inform manager via Slack or phone. HR will regularize it post facto.",
+    "metadata": {
+      "source": "hr_leave_policy",
+      "chunk_index": 4,
+      "section_title": "🧾 4. Leave Application Process",
+      "type": "text"
+    }
+  },
+  {
+    "id": "hr_leave_policy_chunk_6",
+    "text": "Sprint reviews must be in-office",
+    "metadata": {
+      "source": "hr_leave_policy",
+      "chunk_index": 5,
+      "section_title": "🏢 5. Work From Office (WFO) Expectations by Team",
+      "type": "text"
+    }
+  },
+  {
+    "id": "hr_leave_policy_chunk_7",
+    "text": "In-office mandatory during onboarding\nWFH not permitted except in emergencies",
+    "metadata": {
+      "source": "hr_leave_policy",
+      "chunk_index": 6,
+      "section_title": "Remote only with RSM approval",
+      "type": "text"
+    }
+  },
+  {
+    "id": "hr_leave_policy_chunk_8",
+    "text": "WFH Setup Grant: One-time Rs. 5,000 reimbursement for ergonomic setup (for L3\nMonthly Internet Stipend: Rs. 1,000/month reimbursed for hybrid-eligible roles\nLaptop & Device Policy: Company-issued laptops are mandatory for WFH. VPN\nlogin required.",
+    "metadata": {
+      "source": "hr_leave_policy",
+      "chunk_index": 7,
+      "section_title": "🏡 6. WFH Infrastructure & Support",
+      "type": "text"
+    }
+  },
+  {
+    "id": "hr_leave_policy_chunk_9",
+    "text": "Even when working from home, employees are expected to:\nBe available during official working hours (10 AM – 6 PM)\nAttend stand-ups, sprint reviews, and client calls with camera ON\nRespond to Slack and email within 30–60 mins (unless in focus time)\nMaintain professional attire during meetings\nAvoid working from cafes or public spaces without headphones",
+    "metadata": {
+      "source": "hr_leave_policy",
+      "chunk_index": 8,
+      "section_title": "🧍 7. Employee Code of Conduct While Remote",
+      "type": "text"
+    }
+  },
+  {
+    "id": "hr_leave_policy_chunk_10",
+    "text": "Plan leaves in advance to avoid team disruption\nUpdate Slack status and HRMS while on leave\nUse “Focus Time” slots for deep work and set boundaries\nKeep your calendar updated for hybrid/in-office days\nBlock travel/commute buffers if WFO\nDo not ghost during work hours (even remotely)\nDon’t apply for leave retroactively unless it was an emergency\nAvoid misusing casual leave for vacation\nDon’t bypass approval process or mark WFH without prior intimation\nNo “working from vacation” without explicit approval\nViolations of the leave or WFO policy may result in:\nLeave deduction from future entitlement\nPerformance warning for repeated absenteeism\nEscalation to HRBP and skip-levels for continued non-compliance",
+    "metadata": {
+      "source": "hr_leave_policy",
+      "chunk_index": 9,
+      "section_title": "✅ 8. DOs & DON’Ts – Employee Handbook Style",
+      "type": "text"
+    }
+  },
+  {
+    "id": "hr_leave_policy_chunk_11",
+    "text": "This policy will be reviewed annually or when major operational changes occur.\nExceptions may be granted only via:\nApproval from Reporting Manager, and\nWritten acknowledgment from HR Business Partner\nAll policy queries should be directed to peopleops@companyabc.com\nManagers are empowered to define additional team norms if aligned with this\nUpdated versions will be published on the HRMS and Employee Wiki",
+    "metadata": {
+      "source": "hr_leave_policy",
+      "chunk_index": 10,
+      "section_title": "🔄 10. Review & Exceptions",
+      "type": "text"
+    }
+  }
+]
