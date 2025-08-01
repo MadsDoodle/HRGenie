@@ -88,29 +88,29 @@ Automate creation of formal offer letters by combining company policies and cand
 
 ```mermaid
 flowchart LR
-    subgraph Ingestion & Indexing
-        A[Raw PDFs<br/>HR Policies & Sample Letter] --> B[Chunking<br/>(unstructured + custom heuristics)]
-        B --> C[Chunks JSON<br/>docs_chunks/]
-        C --> D[Embedding Generation<br/>(text-embedding-3-small)]
+    subgraph Ingestion_Indexing
+        A[Raw PDFs: HR Policies & Sample Letter] --> B[Chunking (unstructured + custom heuristics)]
+        B --> C[Chunks JSON (docs_chunks/)]
+        C --> D[Embedding Generation (text-embedding-3-small)]
         D --> E[qdrant_ready_embeddings/]
-        E --> F[Qdrant Upload<br/>(policy_chunks collection)]
+        E --> F[Qdrant Upload (policy_chunks collection)]
     end
 
-    subgraph Retrieval & Metadata
-        G[User Query<br/>"Generate for X"] --> H[Retriever<br/>(retrieve_relevant_chunks)]
+    subgraph Retrieval_Metadata
+        G[User Query: "Generate for X"] --> H[Retriever (retrieve_relevant_chunks)]
         H --> I[Top-k Chunks]
         J[Employee_List.json] --> K[load_employee_metadata]
         K --> L[Employee Metadata Dict]
     end
 
-    subgraph Generation Pipeline
+    subgraph Generation_Pipeline
         subgraph RAG
-            I --> M[generate_offer_letter.py<br/>(LLM + context)]
+            I --> M[generate_offer_letter.py (LLM + context)]
             L --> M
             M --> N{Success?}
         end
         subgraph Fallback
-            L --> O[generate_offer_letter_jinja.py<br/>(Jinja2 template)]
+            L --> O[generate_offer_letter_jinja.py (Jinja2 template)]
             I --> O
         end
         N -- Yes --> P[Offer Letter Text]
@@ -118,27 +118,28 @@ flowchart LR
         O --> P
     end
 
-    subgraph API Layer
-        P --> Q[FastAPI Endpoint<br/>/generate-offer-letter]
+    subgraph API_Layer
+        P --> Q[FastAPI Endpoint (/generate-offer-letter)]
     end
 
     subgraph Frontends
-        Q --> R1[Static HTML Chatbot<br/>(index.html)]
-        Q --> R2[Streamlit App<br/>(app.py)]
+        Q --> R1[Static HTML Chatbot (index.html)]
+        Q --> R2[Streamlit App (app.py)]
     end
 
     subgraph Output
-        P --> S[PDF Export<br/>(save_offer_letter_pdf)]
+        P --> S[PDF Export (save_offer_letter_pdf)]
         S --> T[Downloadable PDF]
         R2 --> U[Session History]
     end
 
-    style Ingestion & Indexing fill:#f9f,stroke:#333,stroke-width:1px
-    style Retrieval & Metadata fill:#bbf,stroke:#333,stroke-width:1px
-    style Generation Pipeline fill:#bfb,stroke:#333,stroke-width:1px
-    style API Layer fill:#ffb,stroke:#333,stroke-width:1px
+    style Ingestion_Indexing fill:#f9f,stroke:#333,stroke-width:1px
+    style Retrieval_Metadata fill:#bbf,stroke:#333,stroke-width:1px
+    style Generation_Pipeline fill:#bfb,stroke:#333,stroke-width:1px
+    style API_Layer fill:#ffb,stroke:#333,stroke-width:1px
     style Frontends fill:#fbf,stroke:#333,stroke-width:1px
     style Output fill:#ff9,stroke:#333,stroke-width:1px
+
 ```
 ---
 
