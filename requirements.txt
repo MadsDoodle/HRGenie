@@ -17,3 +17,5 @@ fastapi[all]
 streamlit
 reportlab
 
+fpdf2
+
