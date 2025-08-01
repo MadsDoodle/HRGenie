@@ -66,7 +66,7 @@ Ensure the format matches the sample offer letter structure.
 Performance bonuses are disbursed quarterly, subject to performance evaluation.
  
 
-Performance bonuses are disbursed quarterly, subject to performance evaluation.
+
 
 3. 🏖 Leave Entitlements (Band L3) 
 You are entitled to 18 days of paid leave annually, structured as follows:
@@ -136,6 +136,15 @@ CTC: {emp['ctc']}
 Generate a complete, personalized offer letter using the structure and format shown above.  
 Follow the same order, tone, and section headers. Format the Compensation Structure as a table, and adjust any bonuses, leave entitlements, WFO policy, or travel clauses based on the candidate's team and band.
 Do not include any commentary or explanation — just return the final offer letter.
+
+==================== 📄 TASK INSTRUCTIONS ====================
+You must now generate an official offer letter in the tone, structure, and format of Company ABC's sample.
+
+Strict Rules:
+1. Use the Compensation Table above **exactly as provided**. ❌ Do NOT modify values, format, or alignment.
+2. Follow the 8-section structure: Appointment, Compensation, Leave, WFO, Travel, IP, Exit, Next Steps.
+3. Keep tone formal and precise. ❌ No explanation or filler.
+4. Output only the final offer letter.
 """
 
 
@@ -143,7 +152,9 @@ Do not include any commentary or explanation — just return the final offer let
         response = openai.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "You are a professional HR offer letter generator."},
+                {"role": "system", "content": "You are a professional HR offer letter generator."
+                 "using exact compensation and metadata provided."
+                 "⚠️ Do NOT modify or hallucinate any salary numbers or data."},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.3,
@@ -173,3 +184,4 @@ if __name__ == "__main__":
     result = generate_offer_letter(emp_name) #for gpt inference
     print("\n📄 Final Offer Letter:\n")
     print(result)
+    

@@ -1,35 +1,26 @@
-from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
+from datetime import datetime
 
-# Setup Jinja2
-env = Environment(loader=FileSystemLoader("templates"))
-template = env.get_template("offerletter_template.txt")
+# Add custom filter for formatting commas in salaries
+def format_with_commas(value):
+    return "{:,}".format(int(value))
 
-def generate_offer_letter_jinja(emp: dict, chunks: list) -> str:
-    def extract_section(chunks, keyword):
-        for c in chunks:
-            if keyword.lower() in c.lower():
-                return c.strip()
-        return "Policy not available."
+def generate_offer_letter_jinja(emp: dict) -> str:
+    env = Environment(loader=FileSystemLoader("templates"))
+    env.filters["comma"] = format_with_commas
 
-    leave = extract_section(chunks, "leave")
-    wfo = extract_section(chunks, "work from office")
-    travel = extract_section(chunks, "travel")
-
+    template = env.get_template("offer_template.txt")
+    today = datetime.today().strftime("%B %d, %Y")
 
     return template.render(
-        date=datetime.today().strftime("%B %d, %Y"),
-        name=emp['name'],
-        
-        band=emp['band'],
-        
-        location=emp['location'],
-        joining_date=emp['joining_date'],
-        fixed_salary=emp['base_salary'],
-        performance_bonus=emp['performance_bonus'],
-        retention_bonus=emp['retention_bonus'],
-        ctc=emp['ctc'],
-        leave_policy=leave,
-        wfo_policy=wfo,
-        travel_policy=travel
+        today=today,
+        name=emp["name"],
+        team=emp["team"],
+        band=emp["band"],
+        base_salary=emp["base_salary"],
+        performance_bonus=emp["performance_bonus"],
+        retention_bonus=emp["retention_bonus"],
+        ctc=emp["ctc"],
+        location=emp["location"],
+        joining_date=emp["joining_date"]
     )
