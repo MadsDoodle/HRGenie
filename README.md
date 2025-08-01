@@ -89,48 +89,48 @@ Automate creation of formal offer letters by combining company policies and cand
 ```mermaid
 flowchart LR
     subgraph Ingestion_Indexing
-        A[Raw PDFs: HR Policies & Sample Letter] --> B[Chunking (unstructured + custom heuristics)]
-        B --> C[Chunks JSON (docs_chunks/)]
-        C --> D[Embedding Generation (text-embedding-3-small)]
-        D --> E[qdrant_ready_embeddings/]
-        E --> F[Qdrant Upload (policy_chunks collection)]
+        A["Raw PDFs: HR Policies & Sample Letter"] --> B["Chunking (unstructured + custom heuristics)"]
+        B --> C["Chunks JSON (docs_chunks/)"]
+        C --> D["Embedding Generation (text-embedding-3-small)"]
+        D --> E["qdrant_ready_embeddings/"]
+        E --> F["Qdrant Upload ('policy_chunks' collection)"]
     end
 
     subgraph Retrieval_Metadata
-        G[User Query: "Generate for X"] --> H[Retriever (retrieve_relevant_chunks)]
-        H --> I[Top-k Chunks]
-        J[Employee_List.json] --> K[load_employee_metadata]
-        K --> L[Employee Metadata Dict]
+        G["User Query: 'Generate for X'"] --> H["Retriever (retrieve_relevant_chunks)"]
+        H --> I["Top-k Chunks"]
+        J["employee_list.json"] --> K["load_employee_metadata"]
+        K --> L["Employee Metadata Dict"]
     end
 
     subgraph Generation_Pipeline
         subgraph RAG
-            I --> M[generate_offer_letter.py (LLM + context)]
+            I --> M["generate_offer_letter.py (LLM + context)"]
             L --> M
-            M --> N{Success?}
+            M --> N{"Success?"}
         end
         subgraph Fallback
-            L --> O[generate_offer_letter_jinja.py (Jinja2 template)]
+            L --> O["generate_offer_letter_jinja.py (Jinja2 template)"]
             I --> O
         end
-        N -- Yes --> P[Offer Letter Text]
-        N -- No  --> O
+        N -- "Yes" --> P["Offer Letter Text"]
+        N -- "No"  --> O
         O --> P
     end
 
     subgraph API_Layer
-        P --> Q[FastAPI Endpoint (/generate-offer-letter)]
+        P --> Q["FastAPI Endpoint (/generate-offer-letter)"]
     end
 
     subgraph Frontends
-        Q --> R1[Static HTML Chatbot (index.html)]
-        Q --> R2[Streamlit App (app.py)]
+        Q --> R1["Static HTML Chatbot (index.html)"]
+        Q --> R2["Streamlit App (app.py)"]
     end
 
     subgraph Output
-        P --> S[PDF Export (save_offer_letter_pdf)]
-        S --> T[Downloadable PDF]
-        R2 --> U[Session History]
+        P --> S["PDF Export (save_offer_letter_pdf)"]
+        S --> T["Downloadable PDF"]
+        R2 --> U["Session History"]
     end
 
     style Ingestion_Indexing fill:#f9f,stroke:#333,stroke-width:1px
