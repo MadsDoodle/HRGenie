@@ -58,32 +58,51 @@ Automate creation of formal offer letters by combining company policies and cand
 ## 🗂️ Directory Structure
 
 ```
-├── data/                       # Raw PDF inputs (HR policies, sample letter)
-│   ├── HR Leave Policy.pdf
-│   ├── HR Travel Policy.pdf
-│   └── HR Offer Letter.pdf
-├── docs_chunks/                # JSON chunks output by unstructured
-├── embeddings/                 # Raw embeddings (text-embedding-3-small)
-├── qdrant_ready_embeddings/    # Formatted JSON for Qdrant ingestion
-├── src/
-│   └── ingest/                 # Scripts for chunking, embedding, uploading
-├── templates/                  # Jinja2 templates for fallback generation
+project-root/
+├── data/                         # 📦 All input/output data
+│   ├── raw_pdfs/                 # HR policies and sample letters
+│   │   ├── HR Leave Policy.pdf
+│   │   ├── HR Travel Policy.pdf
+│   │   └── HR Offer Letter.pdf
+│   ├── docs_chunks/             # Chunked JSONs from PDFs
+│   ├── embeddings/              # Embeddings (raw)
+│   ├── qdrant_ready_embeddings/ # Qdrant-compatible embeddings
+│   ├── employee_list.csv        # Source employee metadata
+│   ├── employee_list.json       # Converted JSON
+│   ├── wfo_policy.json          # Mapping of team to WFO policy
+│   ├── generated_letters/       # Markdown/Plaintext outputs
+│   └── offer_letters/           # Final offer letter PDFs
+│
+├── backend/                     # 🧠 Core logic + model pipeline
+│   ├── ingest/                  # Chunking, embedding, upload
+│   │   ├── chunk_and_embed.py
+│   │   └── upload_qdrant.py
+│   ├── retriever.py             # Qdrant-based retriever
+│   ├── generate_offer_letter.py # RAG-based generation (LLM + retriever)
+│   ├── generate_offer_withoutrag.py # LLM-only generator (no retrieval)
+│   └── generate_offer_letter_nollm.py # Jinja2 fallback generator
+│
+├── utils/                       # 🔧 Shared helpers/utilities
+│   ├── load_employee_metadata.py
+│   └── save_offer_letter_pdf.py
+│
+├── templates/                   # 📄 Jinja2 fallback templates
 │   └── offer_template.txt
-├── generated_letters/          # Sample generated letters (MD, text)
-├── offer_letters/              # Final generated offer PDFs
-├── chunking.log                # Logs from document chunking
-├── Employee_List.csv           # Candidate metadata CSV
-├── Employee_List.json          # Converted JSON metadata
-├── wfo_policy.json             # Mapping of team to WFO policy details
-├── api_server.py               # FastAPI server with offer-generation endpoints
-├── generate_offer_letter.py    # RAG + LLM-based letter generator script
-├── generate_offer_withoutrag.py# LLM-only generator (no retrieval)
-├── generate_offer_letter_nollm.py # Jinja2 fallback generator script
-├── retriever.py                # Qdrant-based retriever for relevant chunks
-├── load_employee_metadata.py   # Utility to load and normalize metadata
-├── save_offer_letter_pdf.py    # PDF export utility using FPDF & Unicode font
-├── app.py                      # Streamlit frontend app
-└── requirements.txt            # Python dependencies
+│
+├── frontend/                    # 🎛️ UI layer
+│   ├── app.py                   # Streamlit UI
+│   └── static_ui/               # (Optional) HTML-based UI
+│       └── index.html
+│
+├── api/                         # 🌐 REST API
+│   └── api_server.py            # FastAPI backend server
+│
+├── logs/
+│   └── chunking.log             # Chunking log
+│
+├── requirements.txt             # Python dependencies
+└── README.md                    # Project documentation
+
 ```
 ---
 ## Entire Workflow
