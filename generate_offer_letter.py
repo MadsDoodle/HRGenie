@@ -10,9 +10,15 @@ from fallback_jinja import generate_offer_letter_jinja  # 👈 fallback
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+import os
+print("🔐 Loaded OPENAI_API_KEY:", os.getenv("OPENAI_API_KEY") is not None)
+
 def generate_offer_letter(emp_name: str) -> str:
     try:
         # Load metadata and vector chunks
+        import openai
+        print("🔐 Key in use:", openai.api_key)
+
         emp = load_employee_metadata(emp_name)
         chunks = retrieve_relevant_chunks(f"Generate offer letter for {emp_name} with policies", top_k=5)
         context = "\n\n".join(chunks)
