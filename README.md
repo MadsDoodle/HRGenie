@@ -9,6 +9,8 @@ This repository contains an **Agentic system** to generate offer letters for can
 **Objective:**  
 Automate creation of formal offer letters by combining company policies and candidate metadata through a retrieval-augmented generation (RAG) pipeline, with fallback templating for reliability.
 
+![System Architecture](assets/dashboard.jpeg)
+
 ---
 
 ## ✨ Key Features
